@@ -43,8 +43,32 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         contentView.layer.cornerRadius = 32
 
         
-        elem1.backgroundColor = .systemMint
+//        elem1.backgroundColor = .systemMint
+        
+        
+        
+        let mainTitleText = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        mainTitleText.font = UIFont.boldSystemFont(ofSize: 24)
+        mainTitleText.text = "Стажировка в Surf"
+        mainTitleText.sizeToFit()
+        elem1.addSubview(mainTitleText)
+        
+        let subTitleText = UILabel(frame: CGRect(x: 0, y: mainTitleText.frame.maxY+12, width: 300, height: 300))
+        subTitleText.font = UIFont.systemFont(ofSize: 14)
+        subTitleText.numberOfLines = 0
+        subTitleText.text = "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты. "
+        subTitleText.textColor = UIColor(red: 0.59, green: 0.58, blue: 0.61, alpha: 1.00)
+        subTitleText.sizeToFit()
+        elem1.addSubview(subTitleText)
+        
+        
+        
+        
         elem2.backgroundColor = .red
+        
+        
+        
+        
         
     
     }
@@ -58,7 +82,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         NSLayoutConstraint.activate([
             elem1.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-            elem1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            elem1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             elem1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             elem1.heightAnchor.constraint(equalToConstant: 300),
             elem1.bottomAnchor.constraint(equalTo: elem2.topAnchor, constant: -35),
