@@ -11,9 +11,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     /// Content view that contains contentElements
     let contentView = UIView()
     
+    /// View that contains two bottom buttons
+    let twoButtonsView = UIView()
+    
     /// ContentElements
     let elem1 = UIView()
     let elem2 = UIView()
+    
+    ///Buttons
+    var titleForButton = ["IOS", "Android", "Design", "Flutter", "QA", "PM"]
 
     
     // MARK: - Lifecycle
@@ -51,7 +57,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         mainTitleText.font = UIFont.boldSystemFont(ofSize: 24)
         mainTitleText.text = "Стажировка в Surf"
         mainTitleText.sizeToFit()
-        elem1.addSubview(mainTitleText)
+
         
         let subTitleText = UILabel(frame: CGRect(x: 0, y: mainTitleText.frame.maxY+12, width: 300, height: 300))
         subTitleText.font = UIFont.systemFont(ofSize: 14)
@@ -59,6 +65,40 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         subTitleText.text = "Работай над реальными задачами под руководством опытного наставника и получи возможность стать частью команды мечты. "
         subTitleText.textColor = UIColor(red: 0.59, green: 0.58, blue: 0.61, alpha: 1.00)
         subTitleText.sizeToFit()
+        
+        
+        let scrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: subTitleText.frame.maxY+12, width: self.view.frame.width, height: 60))
+        var frame : CGRect?
+
+        for i in 0..<titleForButton.count {
+            let button = UIButton(type: .custom)
+            
+            if i == 0 {
+                frame = CGRect(x: 0, y: 0, width: 80, height: 44)
+            } else {
+                frame = CGRect(x: CGFloat(i * 92), y: 0, width: 80, height: 44)
+            }
+
+            button.frame = frame ?? CGRect(x: 10, y: 10, width: 130, height: 44)
+            button.tag = i
+            button.layer.cornerRadius = 12
+            button.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+            button.setTitleColor(.black, for: .normal)
+//            button.rounded(border: 0, radius: button.frame.height/2)
+            button.setTitle(titleForButton[i], for: .normal)
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
+            button.addTarget(self, action: #selector(selectTeam), for: .touchUpInside)
+//            button.sizeToFit()
+            scrollViewWithButtons.addSubview(button)
+        }
+
+        scrollViewWithButtons.contentSize = CGSize(width: 600, height: scrollViewWithButtons.frame.size.height)
+        scrollViewWithButtons.sizeToFit()
+        scrollViewWithButtons.showsHorizontalScrollIndicator = false
+        scrollViewWithButtons.backgroundColor = .white
+        
+        elem1.addSubview(scrollViewWithButtons)
+        elem1.addSubview(mainTitleText)
         elem1.addSubview(subTitleText)
         
         
@@ -66,11 +106,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         elem2.backgroundColor = .red
         
-        
-        
-        
-        
     
+    
+    }
+    
+    
+
+       
+
+
+    @objc func selectTeam() {
+
     }
     
     private func setContentViewConstraints() {
@@ -118,7 +164,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 500)
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 450)
         ])
         
         // Subviews in ContentView. Configure all constraints here.
@@ -149,6 +195,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         imageViewTopConstraint = imageView.topAnchor.constraint(equalTo: view.topAnchor)
         imageViewTopConstraint.priority = UILayoutPriority(rawValue: 900)
         imageViewTopConstraint.isActive = true
+        
+        
+        // Two buttons Constraints
+        let twoButtonsViewTopConstraint: NSLayoutConstraint!
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            twoButtonsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            twoButtonsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            twoButtonsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
 
 }
+
