@@ -12,7 +12,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     let contentView = UIView()
     
     /// View that contains two bottom buttons
-    let twoButtonsView = UIView()
+    var twoButtonsView = UIView()
     
     /// ContentElements
     let elem1 = UIView()
@@ -51,6 +51,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
 //        elem1.backgroundColor = .systemMint
         
+
         
         
         let mainTitleText = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
@@ -91,22 +92,64 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 //            button.sizeToFit()
             scrollViewWithButtons.addSubview(button)
         }
+        
 
         scrollViewWithButtons.contentSize = CGSize(width: 600, height: scrollViewWithButtons.frame.size.height)
         scrollViewWithButtons.sizeToFit()
         scrollViewWithButtons.showsHorizontalScrollIndicator = false
         scrollViewWithButtons.backgroundColor = .white
         
+        
+        let leftFloatingButton = UIButton()
+        leftFloatingButton.setTitle("Хочешь к нам?", for: .normal)
+        leftFloatingButton.setTitleColor(UIColor(red: 0.59, green: 0.58, blue: 0.61, alpha: 1.00), for: .normal)
+        leftFloatingButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+
+        self.view.addSubview(leftFloatingButton)
+        leftFloatingButton.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        leftFloatingButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
+        leftFloatingButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
+        leftFloatingButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        leftFloatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
+        
+        leftFloatingButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        leftFloatingButton.layer.zPosition = 90
+        //floatingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
+        
+        
+        let rightFloatingButton = UIButton()
+        rightFloatingButton.setTitle("Отправить заявку", for: .normal)
+        rightFloatingButton.setTitleColor(.white, for: .normal)
+        rightFloatingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        rightFloatingButton.backgroundColor = UIColor(red: 0.19, green: 0.19, blue: 0.19, alpha: 1.00)
+        rightFloatingButton.layer.cornerRadius = 32
+//        rightFloatingButton.titleLabel?.textAlignment = .left
+        
+        self.view.addSubview(rightFloatingButton)
+        rightFloatingButton.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        rightFloatingButton.widthAnchor.constraint(equalToConstant: 219).isActive = true
+        rightFloatingButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        rightFloatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
+        
+        rightFloatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor , constant: -20).isActive = true
+        rightFloatingButton.layer.zPosition = 90
+        //floatingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
         elem1.addSubview(scrollViewWithButtons)
         elem1.addSubview(mainTitleText)
         elem1.addSubview(subTitleText)
         
-        
+       
         
         
         elem2.backgroundColor = .red
         
-    
+
     
     }
     
@@ -196,15 +239,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         imageViewTopConstraint.priority = UILayoutPriority(rawValue: 900)
         imageViewTopConstraint.isActive = true
         
-        
-        // Two buttons Constraints
-        let twoButtonsViewTopConstraint: NSLayoutConstraint!
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            twoButtonsView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            twoButtonsView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            twoButtonsView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
     }
 
 }
