@@ -28,6 +28,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         configureUI()
         setViewConstraints()
+        addFloatButtons()
     }
 
     private func configureUI() {
@@ -99,6 +100,36 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         scrollViewWithButtons.showsHorizontalScrollIndicator = false
         scrollViewWithButtons.backgroundColor = .white
         
+        elem1.addSubview(scrollViewWithButtons)
+        elem1.addSubview(mainTitleText)
+        elem1.addSubview(subTitleText)
+        
+        
+        elem2.backgroundColor = .red
+    
+    }
+    
+    
+    func addFloatButtons() {
+        let rightFloatingButton = UIButton()
+        rightFloatingButton.setTitle("Отправить заявку", for: .normal)
+        rightFloatingButton.setTitleColor(.white, for: .normal)
+        rightFloatingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        rightFloatingButton.backgroundColor = UIColor(red: 0.19, green: 0.19, blue: 0.19, alpha: 1.00)
+        rightFloatingButton.layer.cornerRadius = 32
+        rightFloatingButton.isUserInteractionEnabled = true
+        rightFloatingButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
+
+        self.view.addSubview(rightFloatingButton)
+        rightFloatingButton.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        rightFloatingButton.widthAnchor.constraint(equalToConstant: 219).isActive = true
+        rightFloatingButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        rightFloatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
+        
+        rightFloatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor , constant: -20).isActive = true
+        //floatingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         let leftFloatingButton = UIButton()
         leftFloatingButton.setTitle("Хочешь к нам?", for: .normal)
@@ -115,56 +146,27 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         leftFloatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
         
         leftFloatingButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-        leftFloatingButton.layer.zPosition = 90
+        
         //floatingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
-        
-        
-        let rightFloatingButton = UIButton()
-        rightFloatingButton.setTitle("Отправить заявку", for: .normal)
-        rightFloatingButton.setTitleColor(.white, for: .normal)
-        rightFloatingButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        rightFloatingButton.backgroundColor = UIColor(red: 0.19, green: 0.19, blue: 0.19, alpha: 1.00)
-        rightFloatingButton.layer.cornerRadius = 32
-//        rightFloatingButton.titleLabel?.textAlignment = .left
-        
-        self.view.addSubview(rightFloatingButton)
-        rightFloatingButton.translatesAutoresizingMaskIntoConstraints = false
+    }
 
-        
-        rightFloatingButton.widthAnchor.constraint(equalToConstant: 219).isActive = true
-        rightFloatingButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        rightFloatingButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
-        
-        rightFloatingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor , constant: -20).isActive = true
-        rightFloatingButton.layer.zPosition = 90
-        //floatingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        
-        elem1.addSubview(scrollViewWithButtons)
-        elem1.addSubview(mainTitleText)
-        elem1.addSubview(subTitleText)
-        
-       
-        
-        
-        elem2.backgroundColor = .red
-        
-
-    
+    @objc func showAlert() {
+        let alertController = UIAlertController(title: "Поздравляем!", message: "Ваша заявка успешно отправлена!", preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Закрыть", style: .default, handler: nil)
+        alertController.addAction(closeAction)
+        present(alertController, animated: true, completion: nil)
     }
     
-    
 
-       
-
-
-    @objc func selectTeam() {
-
+    @objc func selectTeam(sender: UIButton!) {
+        
     }
     
     private func setContentViewConstraints() {
         contentView.addSubview(elem1)
         contentView.addSubview(elem2)
+
         
         elem1.translatesAutoresizingMaskIntoConstraints = false
         elem2.translatesAutoresizingMaskIntoConstraints = false
