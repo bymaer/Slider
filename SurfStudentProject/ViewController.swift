@@ -19,8 +19,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     let elem2 = UIView()
     
     ///Buttons
-    var titleForButton = ["IOS", "Android", "Design", "Flutter", "QA", "PM"]
-
+    var titleForButton = ["IOS", "Android", "Design", "Flutter", "QA", "PM", "Web", "GameDev", "Java", "Frontend"]
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -30,14 +30,15 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         setViewConstraints()
         addFloatButtons()
     }
-
+    
     private func configureUI() {
         scrollView.delegate = self
         scrollView.backgroundColor = .systemBackground
-//        scrollView.layer.cornerRadius = 25
+        //        scrollView.layer.cornerRadius = 25
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.layer.masksToBounds = true
-//        scrollView.layer.cornerCurve = .continuous
-    
+        //        scrollView.layer.cornerCurve = .continuous
+        
         
         headerContainerView.backgroundColor = .gray
         
@@ -48,18 +49,18 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 32
-
         
-//        elem1.backgroundColor = .systemMint
         
-
+        //        elem1.backgroundColor = .systemMint
+        
+        
         
         
         let mainTitleText = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         mainTitleText.font = UIFont.boldSystemFont(ofSize: 24)
         mainTitleText.text = "Стажировка в Surf"
         mainTitleText.sizeToFit()
-
+        
         
         let subTitleText = UILabel(frame: CGRect(x: 0, y: mainTitleText.frame.maxY+12, width: 300, height: 300))
         subTitleText.font = UIFont.systemFont(ofSize: 14)
@@ -71,32 +72,38 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         let scrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: subTitleText.frame.maxY+12, width: self.view.frame.width, height: 60))
         var frame: CGRect?
-
+        
         for i in 0..<titleForButton.count {
             let button = UIButton(type: .custom)
             
+            button.setTitle(titleForButton[i], for: .normal)
+            let size = button.titleLabel?.intrinsicContentSize
+            let width = (size?.width ?? 0) + 48
+            
             if i == 0 {
-                frame = CGRect(x: 0, y: 0, width: 80, height: 44)
+                frame = CGRect(x: 0, y: 0, width: width, height: 44)
             } else {
-                frame = CGRect(x: CGFloat(i * 92), y: 0, width: 80, height: 44)
+                frame = CGRect(x: frame!.maxX + 12, y: 0, width: width, height: 44)
             }
-
+            
+            
+            
             button.frame = frame ?? CGRect(x: 10, y: 10, width: 130, height: 44)
             button.tag = i
             button.layer.cornerRadius = 12
             button.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
             button.setTitleColor(.black, for: .normal)
-//            button.rounded(border: 0, radius: button.frame.height/2)
-            button.setTitle(titleForButton[i], for: .normal)
+            //            button.rounded(border: 0, radius: button.frame.height/2)
+            
             button.setContentCompressionResistancePriority(.required, for: .horizontal)
             button.addTarget(self, action: #selector(selectTeam), for: .touchUpInside)
-
-
-//            button.sizeToFit()
+            
+            
+            //            button.sizeToFit()
             scrollViewWithButtons.addSubview(button)
         }
         
-
+        
         scrollViewWithButtons.contentSize = CGSize(width: 600, height: scrollViewWithButtons.frame.size.height)
         scrollViewWithButtons.sizeToFit()
         scrollViewWithButtons.showsHorizontalScrollIndicator = false
@@ -107,8 +114,77 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         elem1.addSubview(subTitleText)
         
         
-        elem2.backgroundColor = .red
-    
+        let secondMainTitleText = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        secondMainTitleText.font = UIFont.systemFont(ofSize: 14)
+        secondMainTitleText.numberOfLines = 0
+        secondMainTitleText.text = "Получай стипендию, выстраивай удобный график, работай на современном железе."
+        secondMainTitleText.textColor = UIColor(red: 0.59, green: 0.58, blue: 0.61, alpha: 1.00)
+        secondMainTitleText.sizeToFit()
+        
+        
+        let secondScrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: secondMainTitleText.frame.maxY+12, width: self.view.frame.width, height: 120))
+        
+        var row = 0
+        var column = 0
+        var xPosition: CGFloat = 0
+        var yPosition: CGFloat = 0
+        
+        for i in 0..<titleForButton.count {
+                    
+                    let button = UIButton(type: .custom)
+                    button.setTitle(titleForButton[i], for: .normal)
+                    let size = button.titleLabel?.intrinsicContentSize
+                    let width = (size?.width ?? 0) + 48
+                    
+                    button.frame = CGRect(x: xPosition, y: yPosition, width: width, height: 44)
+                        
+                        // Add the button to the scroll view
+                    secondScrollViewWithButtons.addSubview(button)
+
+                        // Calculate the x and y position for the next button
+                        xPosition += width + 10
+                        column += 1
+                        
+                        if column == 5 {
+                            // Start a new row if we have reached the 5th column
+                            column = 0
+                            xPosition = 0
+                            yPosition += 56
+                            row += 1
+                        }
+                        
+                        if row == 3 {
+                            // Stop adding buttons if we have reached the 2nd row
+                            break
+                        }
+            
+            
+            //            button.frame = frameForSecond ?? CGRect(x: 10, y: 10, width: 130, height: 44)
+            button.tag = i
+            button.layer.cornerRadius = 12
+            button.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+            button.setTitleColor(.black, for: .normal)
+            //            button.rounded(border: 0, radius: button.frame.height/2)
+            button.setTitle(titleForButton[i], for: .normal)
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
+            button.addTarget(self, action: #selector(selectTeam), for: .touchUpInside)
+            
+            
+            //            button.sizeToFit()
+            //            secondScrollViewWithButtons.addSubview(button)
+        }
+        
+        secondScrollViewWithButtons.contentSize = CGSize(width: 600, height: scrollViewWithButtons.frame.size.height)
+        secondScrollViewWithButtons.sizeToFit()
+        secondScrollViewWithButtons.showsHorizontalScrollIndicator = false
+        secondScrollViewWithButtons.backgroundColor = .white
+        
+        elem2.addSubview(secondScrollViewWithButtons)
+        elem2.addSubview(secondMainTitleText)
+        
+        //        elem2.backgroundColor = .red
+        //        elem1.backgroundColor = .magenta
+        
     }
     
     
@@ -121,10 +197,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         rightFloatingButton.layer.cornerRadius = 32
         rightFloatingButton.isUserInteractionEnabled = true
         rightFloatingButton.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
-
+        
         self.view.addSubview(rightFloatingButton)
         rightFloatingButton.translatesAutoresizingMaskIntoConstraints = false
-
+        
         
         rightFloatingButton.widthAnchor.constraint(equalToConstant: 219).isActive = true
         rightFloatingButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -137,10 +213,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         leftFloatingButton.setTitle("Хочешь к нам?", for: .normal)
         leftFloatingButton.setTitleColor(UIColor(red: 0.59, green: 0.58, blue: 0.61, alpha: 1.00), for: .normal)
         leftFloatingButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-
+        
         self.view.addSubview(leftFloatingButton)
         leftFloatingButton.translatesAutoresizingMaskIntoConstraints = false
-
+        
         
         leftFloatingButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
         leftFloatingButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
@@ -152,7 +228,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         //floatingButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
     }
-
+    
     @objc func showAlert() {
         let alertController = UIAlertController(title: "Поздравляем!", message: "Ваша заявка успешно отправлена!", preferredStyle: .alert)
         let closeAction = UIAlertAction(title: "Закрыть", style: .default, handler: nil)
@@ -160,7 +236,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-
+    
     @objc func selectTeam(sender: UIButton!) {
         sender.isSelected.toggle()
         if sender.isSelected {
@@ -179,7 +255,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     private func setContentViewConstraints() {
         contentView.addSubview(elem1)
         contentView.addSubview(elem2)
-
+        
         
         elem1.translatesAutoresizingMaskIntoConstraints = false
         elem2.translatesAutoresizingMaskIntoConstraints = false
@@ -188,12 +264,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             elem1.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             elem1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             elem1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            elem1.heightAnchor.constraint(equalToConstant: 300),
-            elem1.bottomAnchor.constraint(equalTo: elem2.topAnchor, constant: -35),
+            elem1.heightAnchor.constraint(equalToConstant: 180),
+            elem1.bottomAnchor.constraint(equalTo: elem2.topAnchor, constant: 0),
             
-            elem2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            elem2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             elem2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            elem2.heightAnchor.constraint(equalToConstant: 300),
+            elem2.heightAnchor.constraint(equalToConstant: 180),
             elem2.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
         ])
     }
@@ -217,7 +293,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         // Height of ContentView calculates based on inside elements
         scrollView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -255,6 +331,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         imageViewTopConstraint.isActive = true
         
     }
-
+    
 }
 
