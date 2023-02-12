@@ -72,6 +72,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         let scrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: subTitleText.frame.maxY+12, width: self.view.frame.width, height: 60))
         var frame: CGRect?
+        var totalWidthButtons: CGFloat = 0
         
         for i in 0..<titleForButton.count {
             let button = UIButton(type: .custom)
@@ -79,6 +80,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             button.setTitle(titleForButton[i], for: .normal)
             let size = button.titleLabel?.intrinsicContentSize
             let width = (size?.width ?? 0) + 48
+            totalWidthButtons += width + 15
             
             if i == 0 {
                 frame = CGRect(x: 0, y: 0, width: width, height: 44)
@@ -104,7 +106,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         }
         
         
-        scrollViewWithButtons.contentSize = CGSize(width: 600, height: scrollViewWithButtons.frame.size.height)
+        scrollViewWithButtons.contentSize = CGSize(width: totalWidthButtons, height: scrollViewWithButtons.frame.size.height)
         scrollViewWithButtons.sizeToFit()
         scrollViewWithButtons.showsHorizontalScrollIndicator = false
         scrollViewWithButtons.backgroundColor = .white
@@ -124,39 +126,42 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         let secondScrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: secondMainTitleText.frame.maxY+12, width: self.view.frame.width, height: 120))
         
+        
         var row = 0
         var column = 0
         var xPosition: CGFloat = 0
         var yPosition: CGFloat = 0
+        var maxRowWidth: CGFloat = 0
         
         for i in 0..<titleForButton.count {
-                    
-                    let button = UIButton(type: .custom)
-                    button.setTitle(titleForButton[i], for: .normal)
-                    let size = button.titleLabel?.intrinsicContentSize
-                    let width = (size?.width ?? 0) + 48
-                    
-                    button.frame = CGRect(x: xPosition, y: yPosition, width: width, height: 44)
-                        
-                        // Add the button to the scroll view
-                    secondScrollViewWithButtons.addSubview(button)
-
-                        // Calculate the x and y position for the next button
-                        xPosition += width + 10
-                        column += 1
-                        
-                        if column == 5 {
-                            // Start a new row if we have reached the 5th column
-                            column = 0
-                            xPosition = 0
-                            yPosition += 56
-                            row += 1
-                        }
-                        
-                        if row == 3 {
-                            // Stop adding buttons if we have reached the 2nd row
-                            break
-                        }
+            
+            let button = UIButton(type: .custom)
+            button.setTitle(titleForButton[i], for: .normal)
+            let size = button.titleLabel?.intrinsicContentSize
+            let width = (size?.width ?? 0) + 48
+            
+            button.frame = CGRect(x: xPosition, y: yPosition, width: width, height: 44)
+            
+            // Add the button to the scroll view
+            secondScrollViewWithButtons.addSubview(button)
+            
+            // Calculate the x and y position for the next button
+            xPosition += width + 10
+            column += 1
+            
+            if column == 5 {
+                // Start a new row if we have reached the 5th column
+                maxRowWidth = max(maxRowWidth, xPosition) + 15
+                column = 0
+                xPosition = 0
+                yPosition += 56
+                row += 1
+            }
+            
+            if row == 3 {
+                // Stop adding buttons if we have reached the 2nd row
+                break
+            }
             
             
             //            button.frame = frameForSecond ?? CGRect(x: 10, y: 10, width: 130, height: 44)
@@ -174,7 +179,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             //            secondScrollViewWithButtons.addSubview(button)
         }
         
-        secondScrollViewWithButtons.contentSize = CGSize(width: 600, height: scrollViewWithButtons.frame.size.height)
+        secondScrollViewWithButtons.contentSize = CGSize(width: maxRowWidth, height: yPosition)
         secondScrollViewWithButtons.sizeToFit()
         secondScrollViewWithButtons.showsHorizontalScrollIndicator = false
         secondScrollViewWithButtons.backgroundColor = .white
