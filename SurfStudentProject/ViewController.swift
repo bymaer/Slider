@@ -1,31 +1,25 @@
 import UIKit
 
 class ViewController: UIViewController, UIScrollViewDelegate {
-    // MARK: - Layout Elements
-    /// Root elements
-    var scrollView = UIScrollView()
-    var label = UILabel()
-    var headerContainerView = UIView()
-    var imageView = UIImageView()
+    // MARK: - Properties
+    private let scrollView = UIScrollView()
+    private let label = UILabel()
+    private let headerContainerView = UIView()
+    private let imageView = UIImageView()
+    private let contentView = UIView()
     
-    /// Content view that contains contentElements
-    let contentView = UIView()
     
-    /// View that contains two bottom buttons
-    var twoButtonsView = UIView()
+
+    private let elem1 = UIView()
+    private let elem2 = UIView()
     
-    /// ContentElements
-    let elem1 = UIView()
-    let elem2 = UIView()
-    
-    ///Buttons
-    var titleForButton = ["IOS", "Android", "Design", "Flutter", "QA", "PM", "Web", "GameDev", "Java", "Frontend"]
-    
+    private let titleForButton = ["IOS", "Android", "Design", "Flutter", "QA", "PM", "Web", "GameDev", "Java", "Frontend"]
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overrideUserInterfaceStyle = .light
         configureUI()
         setViewConstraints()
         addFloatButtons()
