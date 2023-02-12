@@ -70,7 +70,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         
         let scrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: subTitleText.frame.maxY+12, width: self.view.frame.width, height: 60))
-        var frame : CGRect?
+        var frame: CGRect?
 
         for i in 0..<titleForButton.count {
             let button = UIButton(type: .custom)
@@ -90,6 +90,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             button.setTitle(titleForButton[i], for: .normal)
             button.setContentCompressionResistancePriority(.required, for: .horizontal)
             button.addTarget(self, action: #selector(selectTeam), for: .touchUpInside)
+
+
 //            button.sizeToFit()
             scrollViewWithButtons.addSubview(button)
         }
@@ -160,7 +162,18 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
 
     @objc func selectTeam(sender: UIButton!) {
-        
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            UIView.animate(withDuration: 0.15) {
+                sender.setTitleColor(.white, for: .normal)
+                sender.backgroundColor = UIColor(red: 0.19, green: 0.19, blue: 0.19, alpha: 1.00)
+            }
+        } else {
+            UIView.animate(withDuration: 0.15) {
+                sender.setTitleColor(.black, for: .normal)
+                sender.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.96, alpha: 1.00)
+            }
+        }
     }
     
     private func setContentViewConstraints() {
