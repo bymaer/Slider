@@ -114,7 +114,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         secondMainTitleText.sizeToFit()
         
         
-        let secondScrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: secondMainTitleText.frame.maxY+12, width: self.view.frame.width, height: 120))
+        let secondScrollViewWithButtons = UIScrollView(frame: CGRect(x: 0, y: secondMainTitleText.frame.maxY+12, width: self.view.frame.width, height: 112))
         secondScrollViewWithButtons.delegate = self
         
         var row = 0
@@ -131,16 +131,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             let width = (size?.width ?? 0) + 48
             
             button.frame = CGRect(x: xPosition, y: yPosition, width: width, height: 44)
-            
-            // Add the button to the scroll view
             secondScrollViewWithButtons.addSubview(button)
-            
-            // Calculate the x and y position for the next button
             xPosition += width + 10
             column += 1
             
             if column == 5 {
-                // Start a new row if we have reached the 5th column
                 maxRowWidth = max(maxRowWidth, xPosition) + 15
                 column = 0
                 xPosition = 0
@@ -149,7 +144,6 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             }
             
             if row == 3 {
-                // Stop adding buttons if we have reached the 2nd row
                 break
             }
             
@@ -165,7 +159,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         
         }
         
-        secondScrollViewWithButtons.contentSize = CGSize(width: maxRowWidth, height: yPosition)
+        secondScrollViewWithButtons.contentSize = CGSize(width: maxRowWidth, height: secondScrollViewWithButtons.frame.height)
         secondScrollViewWithButtons.sizeToFit()
         secondScrollViewWithButtons.showsHorizontalScrollIndicator = false
         secondScrollViewWithButtons.backgroundColor = .white
